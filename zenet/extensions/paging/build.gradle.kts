@@ -4,14 +4,13 @@ plugins {
 }
 
 android {
-    namespace = "br.com.khomdrake.request"
+    namespace = "br.com.khomdrake.extensions.paging"
     compileSdk = 34
 
     defaultConfig {
         minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -34,11 +33,9 @@ android {
 
 dependencies {
 
+    implementation(project(":zenet:extensions:core"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.google.material)
-    implementation(libs.toolkit.livedata)
-    implementation(libs.timber)
-
+    implementation(libs.androidx.paging)
 }

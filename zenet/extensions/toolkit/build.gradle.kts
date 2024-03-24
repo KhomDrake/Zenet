@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "br.com.khomdrake.request"
+    namespace = "br.com.khomdrake.extensions.toolkit"
     compileSdk = 34
 
     defaultConfig {
@@ -36,9 +36,6 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.google.material)
-    implementation(libs.toolkit.livedata)
-    implementation(libs.timber)
-
+    implementation(libs.toolkit.statemachine)
 }

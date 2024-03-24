@@ -19,5 +19,8 @@ rootProject.name = "zenet"
 
 include(":app")
 include(":zenet:request")
-include(":zenet:test")
-include(":zenet:extensions")
+include(":zenet:tests:core")
+include(":zenet:extensions:core")
+include(":zenet:extensions:paging")
+include(":zenet:extensions:toolkit")
+include(":zenet:tests:koin")

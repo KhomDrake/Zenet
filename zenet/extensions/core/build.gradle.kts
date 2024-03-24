@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "br.com.khomdrake.request"
+    namespace = "br.com.khomdrake.extensions"
     compileSdk = 34
 
     defaultConfig {
@@ -34,11 +34,12 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.google.material)
-    implementation(libs.toolkit.livedata)
-    implementation(libs.timber)
-
+    implementation(libs.toolkit.statemachine)
+    implementation(libs.androidx.paging)
+    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }

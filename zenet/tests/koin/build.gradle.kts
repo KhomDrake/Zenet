@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "br.com.khomdrake.request"
+    namespace = "br.com.khomdrake.tests.koin"
     compileSdk = 34
 
     defaultConfig {
@@ -34,11 +34,7 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.google.material)
-    implementation(libs.toolkit.livedata)
-    implementation(libs.timber)
+    api(libs.koin.android)
+    api(libs.tests.androidx.junit)
 
 }

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "br.com.cosmind.zenet"
+    namespace = "br.com.khomdrake.zenet"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "br.com.cosmind.zenet"
+        applicationId = "br.com.khomdrake.zenet"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -52,7 +52,7 @@ android {
 dependencies {
 
     implementation(project(":zenet:request"))
-    implementation(project(":zenet:extensions"))
+    implementation(project(":zenet:extensions:core"))
 
     implementation("io.github.khomdrake:imperiya:0.0.2-SNAPSHOT:compose@aar")
     implementation(libs.androidx.core.ktx)
