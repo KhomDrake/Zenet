@@ -54,19 +54,20 @@ dependencies {
     implementation(project(":zenet:request"))
     implementation(project(":zenet:extensions:core"))
 
-    implementation("io.github.khomdrake:imperiya:0.0.2-SNAPSHOT:compose@aar")
+    implementation(libs.imperiya) {
+        artifact {
+            classifier = "compose"
+            type = "aar"
+        }
+    }
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.google.material)
-    implementation(libs.toolkit.delegate)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.toolkit.delegate)
-    implementation(libs.toolkit.livedata)
-    implementation(libs.toolkit.statemachine)
-    implementation(libs.shimmer)
-    implementation(libs.pagerindicator)
+    implementation(libs.koin.android)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.google.material)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.runtime)
@@ -74,6 +75,5 @@ dependencies {
     implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.compose.livedata)
     implementation(libs.androidx.compose.tooling.preview)
-
     implementation(libs.androidx.compose.tooling.debug)
 }
