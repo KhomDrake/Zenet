@@ -53,7 +53,6 @@ dependencies {
 
     implementation(project(":zenet:request"))
     implementation(project(":zenet:extensions"))
-    androidTestImplementation(project(":zenet:extensions"))
 
     implementation("io.github.khomdrake:imperiya:0.0.2-SNAPSHOT:compose@aar")
     implementation(libs.androidx.core.ktx)
