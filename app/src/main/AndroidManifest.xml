@@ -27,6 +27,9 @@
         <activity android:name=".date.DateActivity"
             android:theme="@style/Imperiya.Theme"
             android:exported="false"/>
+        <activity android:name=".request.RequestSampleActivity"
+            android:theme="@style/Imperiya.Theme"
+            android:exported="false"/>
     </application>
 
 </manifest>

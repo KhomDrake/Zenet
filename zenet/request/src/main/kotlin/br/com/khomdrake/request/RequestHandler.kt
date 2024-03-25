@@ -1,8 +1,10 @@
 package br.com.khomdrake.request
 
+import android.content.Context
 import androidx.annotation.VisibleForTesting
 import br.com.arch.toolkit.livedata.response.MutableResponseLiveData
 import br.com.arch.toolkit.livedata.response.ResponseLiveData
+import br.com.khomdrake.request.cache.DiskVault
 import br.com.khomdrake.request.data.Response
 import br.com.khomdrake.request.data.flow.MutableResponseStateFlow
 import br.com.khomdrake.request.data.flow.ResponseStateFlow
@@ -24,12 +26,12 @@ private val requestScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
 class RequestHandler<Data>(
     private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO),
-    private val tag: String = ""
+    private val key: String = ""
 ) {
 
     private val lock = object {}
 
-    private var config: Config<Data> = Config(tag)
+    private var config: Config<Data> = Config(key)
 
     private val _responseLiveData = MutableResponseLiveData<Data>()
 
@@ -47,15 +49,11 @@ class RequestHandler<Data>(
             )
 
     fun config(func: Config<Data>.() -> Unit) = apply {
-        config = Config<Data>(tag).apply(func)
-    }
-
-    fun config(newConfig: Config<Data>) = apply {
-        config = newConfig
+        config = Config<Data>(key).apply(func)
     }
 
     fun logInfo(info: String) {
-        LogHandler.logInfo(tag, info)
+        LogHandler.logInfo(key, info)
     }
 
     fun execute() = synchronized(lock) {
@@ -114,11 +112,20 @@ class RequestHandler<Data>(
 
     }
 
+    companion object {
+
+        fun init(context: Context, cleanCacheTimeout: Boolean = false) {
+            DiskVault.init(context)
+            if(cleanCacheTimeout) DiskVault.clearCache()
+        }
+
+    }
+
 }
 
-fun <T>bondsmith(
-    tag: String = "",
+fun <T>requestHandler(
+    key: String = "",
     scope: CoroutineScope = requestScope
 ) : RequestHandler<T> {
-    return RequestHandler(scope, tag)
+    return RequestHandler(scope, key)
 }

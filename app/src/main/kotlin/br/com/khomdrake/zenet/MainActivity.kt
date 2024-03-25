@@ -17,6 +17,7 @@ import br.com.khomdrake.zenet.date.DateActivity
 import br.com.khomdrake.imperiya.ui.components.DefaultTopBar
 import br.com.khomdrake.imperiya.ui.components.NormalButton
 import br.com.khomdrake.imperiya.ui.theme.ImperiyaTheme
+import br.com.khomdrake.zenet.request.RequestSampleActivity
 import kotlin.reflect.KClass
 
 class MainActivity : ComponentActivity() {
@@ -42,6 +43,10 @@ class MainActivity : ComponentActivity() {
                             Component(
                                 name = "Dates",
                                 kclass = DateActivity::class
+                            ),
+                            Component(
+                                name = "Request",
+                                kclass = RequestSampleActivity::class
                             )
                         ),
                         onClickComponent = { component ->
