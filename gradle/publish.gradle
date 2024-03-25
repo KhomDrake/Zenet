@@ -4,7 +4,7 @@ apply plugin: 'signing'
 apply from: "$rootDir/gradle/load-env.gradle"
 
 def libGroup = "io.github.khomdrake"
-def libVersion = "0.0.1-SNAPSHOT"
+def libVersion = "0.0.1"
 
 tasks.register('androidJavadoc', Javadoc) {
     source = android.sourceSets.main.java.srcDirs
