@@ -1,4 +1,4 @@
-package br.com.khomdrake.extensions
+package br.com.khomdrake.extensions.core
 
 import android.view.View
 import android.widget.Button

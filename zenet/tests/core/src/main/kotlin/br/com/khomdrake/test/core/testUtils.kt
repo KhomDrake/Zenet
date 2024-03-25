@@ -1,4 +1,4 @@
-package br.com.khomdrake.test
+package br.com.khomdrake.test.core
 
 import android.app.Instrumentation
 import android.content.Context

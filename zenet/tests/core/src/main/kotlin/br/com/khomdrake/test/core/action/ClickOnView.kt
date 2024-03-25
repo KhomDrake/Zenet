@@ -1,4 +1,4 @@
-package br.com.khomdrake.test.action
+package br.com.khomdrake.test.core.action
 
 import android.view.View
 import androidx.test.espresso.UiController

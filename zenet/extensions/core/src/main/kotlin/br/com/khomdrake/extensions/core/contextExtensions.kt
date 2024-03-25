@@ -1,4 +1,4 @@
-package br.com.khomdrake.extensions
+package br.com.khomdrake.extensions.core
 
 import android.content.Context
 import android.content.Intent

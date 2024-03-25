@@ -1,21 +1,24 @@
-package br.com.khomdrake.test.action
+package br.com.khomdrake.test.core.action
 
 import android.view.View
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.matcher.ViewMatchers
+import com.google.android.material.tabs.TabLayout
 import org.hamcrest.Matcher
 
-class ClickIgnoreConstraint : ViewAction {
+class ClickTabLayout(private val position: Int) : ViewAction {
     override fun getConstraints(): Matcher<View> {
-        return ViewMatchers.isEnabled()
+        return ViewMatchers.isDisplayed()
     }
 
     override fun getDescription(): String {
-        return "Clicking on view ignoring constraint"
+        return "Clicking on TabLayout ChildView position $position"
     }
 
     override fun perform(uiController: UiController, view: View) {
-        view.performClick()
+        if(view is TabLayout) {
+            view.getTabAt(position)?.view?.performClick()
+        }
     }
 }

@@ -1,7 +1,7 @@
 package br.com.khomdrake.zenet
 
 import android.app.Application
-import br.com.khomdrake.extensions.DateConfig
+import br.com.khomdrake.extensions.core.DateConfig
 import br.com.khomdrake.request.RequestHandler
 import br.com.khomdrake.zenet.request.DiskData
 import br.com.khomdrake.zenet.request.pages.NoCacheViewModel

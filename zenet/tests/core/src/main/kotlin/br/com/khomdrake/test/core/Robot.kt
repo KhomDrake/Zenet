@@ -1,4 +1,4 @@
-package br.com.khomdrake.test
+package br.com.khomdrake.test.core
 
 interface Setup<L : Launch<C>, C : Check> {
 

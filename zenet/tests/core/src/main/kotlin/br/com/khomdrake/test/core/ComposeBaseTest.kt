@@ -1,4 +1,4 @@
-package br.com.khomdrake.test
+package br.com.khomdrake.test.core
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import org.junit.Rule

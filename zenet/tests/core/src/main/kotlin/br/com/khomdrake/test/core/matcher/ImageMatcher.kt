@@ -1,4 +1,4 @@
-package br.com.khomdrake.test.matcher
+package br.com.khomdrake.test.core.matcher
 
 import android.view.View
 import android.widget.ImageView

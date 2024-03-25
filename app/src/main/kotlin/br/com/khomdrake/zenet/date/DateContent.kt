@@ -19,11 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import br.com.khomdrake.extensions.differenceFromNow
-import br.com.khomdrake.extensions.nowAdjustedForZoneId
-import br.com.khomdrake.extensions.patternDate2
-import br.com.khomdrake.extensions.toFormattedString
-import br.com.khomdrake.extensions.today
+import br.com.khomdrake.extensions.core.differenceFromNow
+import br.com.khomdrake.extensions.core.nowAdjustedForZoneId
+import br.com.khomdrake.extensions.core.patternDate2
+import br.com.khomdrake.extensions.core.toFormattedString
+import br.com.khomdrake.extensions.core.today
 import br.com.khomdrake.imperiya.ui.preview.BackgroundPreview
 import br.com.khomdrake.imperiya.ui.theme.ImperiyaTheme
 import br.com.khomdrake.imperiya.ui.theme.ImperiyaTypography

@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "br.com.khomdrake.test"
+    namespace = "br.com.khomdrake.test.core"
 }
 
 dependencies {

@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "br.com.khomdrake.extensions"
+    namespace = "br.com.khomdrake.extensions.core"
 }
 
 dependencies {

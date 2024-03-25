@@ -1,4 +1,4 @@
-package br.com.khomdrake.test
+package br.com.khomdrake.test.core
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -11,14 +11,14 @@ import androidx.test.espresso.matcher.ViewMatchers.withHint
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
-import br.com.khomdrake.test.action.ClickIgnoreConstraint
-import br.com.khomdrake.test.action.ClickOnChildView
-import br.com.khomdrake.test.action.ClickTabLayout
-import br.com.khomdrake.test.matcher.ImageDrawableMatcher
-import br.com.khomdrake.test.matcher.RecyclerViewMatcherQuantityItems
-import br.com.khomdrake.test.matcher.TabLayoutTextMatcher
-import br.com.khomdrake.test.matcher.atPosition
-import br.com.khomdrake.test.matcher.withRecyclerViewItem
+import br.com.khomdrake.test.core.action.ClickIgnoreConstraint
+import br.com.khomdrake.test.core.action.ClickOnChildView
+import br.com.khomdrake.test.core.action.ClickTabLayout
+import br.com.khomdrake.test.core.matcher.ImageDrawableMatcher
+import br.com.khomdrake.test.core.matcher.RecyclerViewMatcherQuantityItems
+import br.com.khomdrake.test.core.matcher.TabLayoutTextMatcher
+import br.com.khomdrake.test.core.matcher.atPosition
+import br.com.khomdrake.test.core.matcher.withRecyclerViewItem
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.not
 

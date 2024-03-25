@@ -1,4 +1,4 @@
-package br.com.khomdrake.test
+package br.com.khomdrake.test.core
 
 import androidx.test.espresso.intent.Intents
 import org.junit.rules.TestRule
