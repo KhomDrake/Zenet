@@ -1,0 +1,20 @@
+def propertiesFile = file("${rootDir}/env.properties")
+def properties = new Properties()
+properties.load(propertiesFile.newDataInputStream())
+
+ext.env = [
+    group: properties.getProperty("GROUP"),
+    pom_description: properties.getProperty("POM_DESCRIPTION"),
+    pom_url: properties.getProperty("POM_URL"),
+    pom_scm_url: properties.getProperty("POM_SCM_URL"),
+    pom_scm_connection: properties.getProperty("POM_SCM_CONNECTION"),
+    pom_scm_dev_connection: properties.getProperty("POM_SCM_DEV_CONNECTION"),
+    pom_license_name: properties.getProperty("POM_LICENCE_NAME"),
+    pom_license_url: properties.getProperty("POM_LICENCE_URL"),
+    pom_license_dist: properties.getProperty("POM_LICENCE_DIST"),
+    pom_developer_id: properties.getProperty("POM_DEVELOPER_ID"),
+    pom_developer_name: properties.getProperty("POM_DEVELOPER_NAME"),
+    pom_developer_email: properties.getProperty("POM_DEVELOPER_EMAIL"),
+    ossrh_username: properties.getProperty("ossrhUsername"),
+    ossrh_password: properties.getProperty("ossrhPassword"),
+]
