@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Zenet Sample</string>
+
+    <string name="no_cache_title">No cache</string>
+    <string name="with_cache_memory">With cache in memory</string>
+    <string name="with_cache_disk">With cache in disk</string>
+</resources>

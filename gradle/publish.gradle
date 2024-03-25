@@ -1,0 +1,96 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+apply from: "$rootDir/gradle/load-env.gradle"
+
+def libGroup = "io.github.khomdrake"
+def libVersion = "0.0.1"
+
+tasks.register('androidJavadoc', Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    android.libraryVariants.all { variant ->
+        if (variant.name == 'release') {
+            owner.classpath += variant.javaCompileProvider.get().classpath
+        }
+    }
+
+    exclude '**/R.html', '**/R.*.html', '**/index.html'
+    options.encoding 'utf-8'
+    options {
+        addStringOption 'docencoding', 'utf-8'
+        addStringOption 'charset', 'utf-8'
+        links 'https://docs.oracle.com/javase/7/docs/api/'
+        links 'https://d.android.com/reference'
+        links 'https://developer.android.com/reference/androidx/'
+    }
+}
+
+tasks.register('androidJavadocJar', Jar) {
+    dependsOn androidJavadoc
+    archiveClassifier.set('javadoc')
+    from androidJavadoc.destinationDir
+
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+tasks.register('javaSourcesJar', Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            from components.findByName('release')
+
+            groupId libGroup
+            artifactId = "zenet-${project.path.replace(":zenet:", "").replace(":", "-")}"
+            version libVersion
+            pom {
+                name = artifactId
+                description = env.pom_description
+                url = env.pom_url
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                scm {
+                    connection = env.pom_scm_connection
+                    url = env.pom_url
+                }
+                developers {
+                    developer {
+                        id = env.pom_developer_id
+                        name = env.pom_developer_name
+                        email = env.pom_developer_email
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            if (libVersion.containsIgnoreCase("SNAPSHOT")) {
+                url = "https://s01.oss.sonatype.org/content/repositories/snapshots"
+            } else {
+                url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
+            }
+
+            credentials {
+                username env.ossrh_username
+                password env.ossrh_password
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications
+}
