@@ -4,7 +4,7 @@ apply plugin: 'signing'
 apply from: "$rootDir/gradle/load-env.gradle"
 
 def libGroup = "io.github.khomdrake"
-def libVersion = "0.0.1"
+def libVersion = "0.0.2"
 
 tasks.register('androidJavadoc', Javadoc) {
     source = android.sourceSets.main.java.srcDirs
@@ -46,7 +46,9 @@ tasks.register('javaSourcesJar', Jar) {
 publishing {
     publications {
         release(MavenPublication) {
-            from components.findByName('release')
+            afterEvaluate {
+                from components.findByName('release')
+            }
 
             groupId libGroup
             artifactId = "zenet-${project.path.replace(":zenet:", "").replace(":", "-")}"
@@ -73,6 +75,8 @@ publishing {
                     }
                 }
             }
+
+            artifact("$buildDir/outputs/aar/${project.name}-release.aar")
         }
     }
     repositories {
