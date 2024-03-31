@@ -29,4 +29,4 @@ jobs:
         run: ./gradlew publish 
           -Psigning.keyId=${{ secrets.KEY_ID }}
           -Psigning.password=${{ secrets.KEY_PASSWORD }}
-          -Psigning.secretKeyRingFile=/home/runner/work/zenet/zenet/zenet.gpg
+          -Psigning.secretKeyRingFile=/home/runner/work/Zenet/Zenet/zenet.gpg
