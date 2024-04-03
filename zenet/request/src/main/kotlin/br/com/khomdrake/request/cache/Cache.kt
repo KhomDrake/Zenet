@@ -11,6 +11,7 @@ class Cache<Data> internal constructor(private val key: String) {
     private var type = CacheType.DISK
     private var timeout: Duration = 10.minutes
     private var retrieve: (suspend (String) -> Data?)? = null
+    private var remove: (suspend (String) -> Data?)? = null
     private var save: (suspend (String, Data) -> Unit)? = null
 
     fun save(function: (suspend (key: String, data: Data) -> Unit)?) = apply {
@@ -19,6 +20,10 @@ class Cache<Data> internal constructor(private val key: String) {
 
     fun retrieve(function: suspend (key: String) -> Data?) = apply {
         retrieve = function
+    }
+
+    fun remove(function: suspend (key: String) -> Data?) = apply {
+        remove = function
     }
 
     fun timeout(
@@ -34,6 +39,8 @@ class Cache<Data> internal constructor(private val key: String) {
     }
 
     suspend fun retrieve(key: String) = retrieve?.invoke(key)
+
+    suspend fun remove(key: String) = remove?.invoke(key)
 
     suspend fun saveExpirationDate() {
         val expirationDate = System.currentTimeMillis() + timeout.inWholeMilliseconds
