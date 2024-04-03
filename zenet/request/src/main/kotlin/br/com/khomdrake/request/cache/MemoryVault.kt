@@ -20,7 +20,7 @@ object MemoryVault {
         return runCatching { data[key] as? T }.getOrNull()
     }
 
-    fun clear() {
+    fun clearCache() {
         data.clear()
     }
 
