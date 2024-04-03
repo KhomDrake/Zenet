@@ -1,6 +1,6 @@
 package br.com.khomdrake.request.cache
 
-internal object MemoryVault {
+object MemoryVault {
 
     private val data = mutableMapOf<String, Any>()
 
@@ -18,6 +18,10 @@ internal object MemoryVault {
 
     suspend fun <T>getData(key: String) : T? {
         return runCatching { data[key] as? T }.getOrNull()
+    }
+
+    fun clear() {
+        data.clear()
     }
 
 }

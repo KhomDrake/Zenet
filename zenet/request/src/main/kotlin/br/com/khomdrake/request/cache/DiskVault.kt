@@ -19,7 +19,7 @@ import java.lang.ref.WeakReference
 private const val DATA_STORE_KEY = "93823kjdhaksj"
 private val diskVaultScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-internal object DiskVault {
+object DiskVault {
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
         name = DATA_STORE_KEY,
