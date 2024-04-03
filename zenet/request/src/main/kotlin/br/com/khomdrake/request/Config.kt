@@ -85,7 +85,10 @@ class Config<Data>(private val key: String) {
         collector: FlowCollector<Response<Data>>,
         isExpired: Boolean
     ) {
-        if(isExpired) handler.logInfo("[Config] Request started - Cache expired")
+        if(isExpired) {
+            handler.logInfo("[Config] Request started - Cache expired")
+            runCatching { cache?.remove(key) }
+        }
         else handler.logInfo("[Config] Request started - Cache not set")
 
         val data = execution?.invoke()
