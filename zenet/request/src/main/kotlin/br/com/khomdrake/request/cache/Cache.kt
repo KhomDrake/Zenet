@@ -2,19 +2,35 @@ package br.com.khomdrake.request.cache
 
 import br.com.khomdrake.request.CacheType
 import br.com.khomdrake.request.log.LogHandler
-import kotlin.math.exp
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
-class Cache<Data> internal constructor(private val key: String) {
+class Cache<Data> internal constructor(
+    private val mainTag: String,
+    private var key: String = mainTag
+) {
 
     private var type = CacheType.DISK
     private var timeout: Duration = 10.minutes
     private var retrieve: (suspend (String) -> Data?)? = null
-    private var remove: (suspend (String) -> Data?)? = null
-    private var save: (suspend (String, Data) -> Unit)? = null
+    private var remove: (suspend (String) -> Boolean)? = null
+    private var save: (suspend (String, Data) -> Boolean)? = null
 
-    fun save(function: (suspend (key: String, data: Data) -> Unit)?) = apply {
+    private suspend fun saveExpirationDate() {
+        val expirationDate = System.currentTimeMillis() + timeout.inWholeMilliseconds
+
+        if(type == CacheType.DISK) {
+            DiskVault.setValue(key, expirationDate)
+        } else {
+            MemoryVault.setData(key, expirationDate)
+        }
+    }
+
+    fun setCacheKey(newKey: String) = apply {
+        key = newKey
+    }
+
+    fun save(function: (suspend (key: String, data: Data) -> Boolean)?) = apply {
         save = function
     }
 
@@ -22,7 +38,7 @@ class Cache<Data> internal constructor(private val key: String) {
         retrieve = function
     }
 
-    fun remove(function: suspend (key: String) -> Data?) = apply {
+    fun remove(function: suspend (key: String) -> Boolean) = apply {
         remove = function
     }
 
@@ -34,21 +50,68 @@ class Cache<Data> internal constructor(private val key: String) {
         type = newType
     }
 
+    private fun logInfo(info: String) {
+        LogHandler.logInfo(mainTag, info)
+    }
+
     suspend fun save(key: String, data: Data) = apply {
-        save?.invoke(key, data)
+        kotlin.runCatching {
+            save?.invoke(key, data)
+        }
+            .onFailure {
+                logInfo(
+                    """
+                            [Cache] Error while trying to save cache with
+                                key: $key
+                                data: $data
+
+                                error: ${it.stackTraceToString()}
+                        """.trimIndent()
+                )
+            }
+            .onSuccess {
+                val savedSuccessfully = it ?: false
+
+                if(savedSuccessfully) {
+                    saveExpirationDate()
+                    logInfo("[Cache] cache saved key: $key")
+                    logInfo("[Cache] cache saved data: $data")
+                } else {
+                    logInfo(
+                        """
+                                [Cache] Cache not saved successfully with
+                                    key: $key
+                                    data: $data
+                            """.trimIndent()
+                    )
+                }
+            }
     }
 
     suspend fun retrieve(key: String) = retrieve?.invoke(key)
 
-    suspend fun remove(key: String) = remove?.invoke(key)
+    suspend fun remove(key: String) = apply {
+        kotlin.runCatching {
+            remove?.invoke(key)
+        }.onSuccess {
+            val savedSuccessfully = it ?: false
+            if(savedSuccessfully)
+                logInfo(
+                    """
+                        [Cache] Cache removed successfully for key $key
+                    """.trimIndent()
+                )
+            else
+                logInfo(
+                    """
+                        [Cache] Cache removed unsuccessfully for key $key
+                    """.trimIndent()
+                )
 
-    suspend fun saveExpirationDate() {
-        val expirationDate = System.currentTimeMillis() + timeout.inWholeMilliseconds
-
-        if(type == CacheType.DISK) {
-            DiskVault.setValue(key, expirationDate)
-        } else {
-            MemoryVault.setData(key, expirationDate)
+        }.onFailure {
+            logInfo(
+                "[Cache] Failure to remove cache for $key with error: \n ${it.stackTraceToString()}"
+            )
         }
     }
 

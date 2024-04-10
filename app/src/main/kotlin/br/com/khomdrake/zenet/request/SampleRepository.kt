@@ -4,7 +4,6 @@ import br.com.khomdrake.request.CacheType
 import br.com.khomdrake.request.requestHandler
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
 
 class SampleRepository {
 
@@ -39,6 +38,10 @@ class SampleRepository {
                 }
                 save { key, data ->
                     memoryData = data
+                    true
+                }
+                remove {
+                    true
                 }
             }
         }
@@ -56,6 +59,10 @@ class SampleRepository {
                 }
                 save { key, data ->
                     DiskData.setValue(key, data)
+                    true
+                }
+                remove { key ->
+                    true
                 }
             }
         }
