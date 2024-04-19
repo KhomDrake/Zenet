@@ -1,4 +1,4 @@
-package br.com.khomdrake.test.core
+package br.com.khomdrake.test.robot
 
 interface Setup<L : Launch<C>, C : Check> {
 

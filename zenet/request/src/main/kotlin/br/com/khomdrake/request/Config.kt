@@ -6,6 +6,7 @@ import br.com.khomdrake.request.data.Response
 import br.com.khomdrake.request.data.responseData
 import br.com.khomdrake.request.data.responseError
 import br.com.khomdrake.request.data.responseLoading
+import br.com.khomdrake.request.exception.RequestNotImplementedException
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.withTimeout
 import kotlin.time.Duration
@@ -73,7 +74,7 @@ class Config<Data>(private val key: String) {
         collector: FlowCollector<Response<Data>>
     ) {
         handler.logInfo("[Config] using cache key: $key")
-        val savedData = cache?.retrieve(key)
+        val savedData = cache?.retrieve()
         savedData?.let {
             handler.logInfo("[Config] cache retrieved: $it")
             collector.emit(responseData(savedData))
@@ -87,22 +88,15 @@ class Config<Data>(private val key: String) {
     ) {
         if(isExpired) {
             handler.logInfo("[Config] Request started - Cache expired")
-            runCatching { cache?.remove(key) }
-        }
-        else handler.logInfo("[Config] Request started - Cache not set")
+            cache?.remove()
+        } else handler.logInfo("[Config] Request started - Cache not set")
 
-        val data = execution?.invoke()
+        val execution = execution ?: throw RequestNotImplementedException()
+        val data = execution.invoke()
         handler.logInfo("[Config] Request ended, data: $data")
-        data?.let {
-            cache?.apply {
-                save(key, data)
-                cache?.saveExpirationDate()
-                handler.logInfo("[Config] cache saved key: $key")
-                handler.logInfo("[Config] cache saved data: $data")
-            }
-            handler.logInfo("[Config] Data emitted: $data")
-            collector.emit(responseData(data))
-        }
+        cache?.save(data)
+        handler.logInfo("[Config] Data emitted: $data")
+        collector.emit(responseData(data))
     }
 
     private suspend inline fun executionWithoutCache(
@@ -110,7 +104,8 @@ class Config<Data>(private val key: String) {
         collector: FlowCollector<Response<Data>>
     ) {
         handler.logInfo("[Config] Request started")
-        val data = execution?.invoke()
+        val execution = execution ?: throw RequestNotImplementedException()
+        val data = execution.invoke()
         handler.logInfo("[Config] Request ended, data: $data")
         collector.emit(responseData(data))
         handler.logInfo("[Config] Data emitted: $data")

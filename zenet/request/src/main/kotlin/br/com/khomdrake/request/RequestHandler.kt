@@ -92,7 +92,7 @@ class RequestHandler<Data>(
         }
     }
 
-    private fun createExecution() = scope.launch(Dispatchers.IO) {
+    private fun createExecution() = scope.launch {
         logInfo("[Execution] creating execution")
         flow {
             config.execute(
@@ -119,15 +119,13 @@ class RequestHandler<Data>(
             if(cleanCacheTimeout) DiskVault.clearCache()
         }
 
-
-
     }
 
 }
 
 fun <T>requestHandler(
-    key: String = "",
+    tag: String = "",
     scope: CoroutineScope = requestScope
 ) : RequestHandler<T> {
-    return RequestHandler(scope, key)
+    return RequestHandler(scope, tag)
 }
