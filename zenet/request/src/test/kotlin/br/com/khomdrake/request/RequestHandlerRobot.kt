@@ -33,6 +33,8 @@ class RequestHandlerSetup(
     private var cacheKey = "default"
     private var requestHandler = requestHandler<String>(key)
 
+    override fun setupWhen() = Unit
+
     override fun createThen(): RequestHandlerCheck {
         return RequestHandlerCheck(fakeDatabase, fakeApi, requestHandler)
     }
@@ -141,7 +143,7 @@ class RequestHandlerLaunch(
     private val fakeApi: FakeApi,
     private val requestHandler: RequestHandler<String>
 ) : When<RequestHandlerCheck> {
-    override fun createCheck(): RequestHandlerCheck {
+    override fun createThen(): RequestHandlerCheck {
         return RequestHandlerCheck(fakeDatabase, fakeApi, requestHandler)
     }
 

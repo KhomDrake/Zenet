@@ -6,22 +6,26 @@ interface Given<W : When<T>, T : Then> {
 
     fun createWhen() : W
 
+    fun setupWhen()
+
     infix fun `when`(func: W.() -> Unit) : W {
+        setupWhen()
         return createWhen().apply(func)
     }
 
     infix fun then(func: T.() -> Unit) : T {
+        setupWhen()
         return createThen().apply(func)
     }
 
 }
 
-interface When<C: Then> {
+interface When<T: Then> {
 
-    fun createCheck() : C
+    fun createThen() : T
 
-    infix fun then(func: C.() -> Unit) : C {
-        return createCheck().apply(func)
+    infix fun then(func: T.() -> Unit) : T {
+        return createThen().apply(func)
     }
 
 }
