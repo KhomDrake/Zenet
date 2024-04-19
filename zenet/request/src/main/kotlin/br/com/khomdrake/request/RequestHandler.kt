@@ -124,8 +124,8 @@ class RequestHandler<Data>(
 }
 
 fun <T>requestHandler(
-    key: String = "",
+    tag: String = "",
     scope: CoroutineScope = requestScope
 ) : RequestHandler<T> {
-    return RequestHandler(scope, key)
+    return RequestHandler(scope, tag)
 }

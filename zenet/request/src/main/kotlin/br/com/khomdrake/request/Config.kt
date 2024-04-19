@@ -6,7 +6,7 @@ import br.com.khomdrake.request.data.Response
 import br.com.khomdrake.request.data.responseData
 import br.com.khomdrake.request.data.responseError
 import br.com.khomdrake.request.data.responseLoading
-import br.com.khomdrake.request.exception.ExecuteNotImplementedException
+import br.com.khomdrake.request.exception.RequestNotImplementedException
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.withTimeout
 import kotlin.time.Duration
@@ -74,7 +74,7 @@ class Config<Data>(private val key: String) {
         collector: FlowCollector<Response<Data>>
     ) {
         handler.logInfo("[Config] using cache key: $key")
-        val savedData = cache?.retrieve(key)
+        val savedData = cache?.retrieve()
         savedData?.let {
             handler.logInfo("[Config] cache retrieved: $it")
             collector.emit(responseData(savedData))
@@ -88,13 +88,13 @@ class Config<Data>(private val key: String) {
     ) {
         if(isExpired) {
             handler.logInfo("[Config] Request started - Cache expired")
-            cache?.remove(key)
+            cache?.remove()
         } else handler.logInfo("[Config] Request started - Cache not set")
 
-        val execution = execution ?: throw ExecuteNotImplementedException()
+        val execution = execution ?: throw RequestNotImplementedException()
         val data = execution.invoke()
         handler.logInfo("[Config] Request ended, data: $data")
-        cache?.save(key, data)
+        cache?.save(data)
         handler.logInfo("[Config] Data emitted: $data")
         collector.emit(responseData(data))
     }
@@ -104,7 +104,7 @@ class Config<Data>(private val key: String) {
         collector: FlowCollector<Response<Data>>
     ) {
         handler.logInfo("[Config] Request started")
-        val execution = execution ?: throw ExecuteNotImplementedException()
+        val execution = execution ?: throw RequestNotImplementedException()
         val data = execution.invoke()
         handler.logInfo("[Config] Request ended, data: $data")
         collector.emit(responseData(data))

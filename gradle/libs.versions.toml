@@ -20,6 +20,7 @@ guava-version = "27.0.1-android"
 objenesis-version = "3.1"
 core-testing-version = "2.2.0"
 compose-shimmer-verison = "1.2.0"
+kotest-version = "5.8.1"
 
 android-lifecycle-livedata-version = "1.1.1"
 androidx-compose-bom-version = "2024.02.02"
@@ -96,9 +97,7 @@ squareup-retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "
 google-material = { group = "com.google.android.material", name = "material", version.ref = 'material-version' }
 
 # Toolkit
-toolkit-delegate = { group = "io.github.matheus-corregiari", name = "delegate", version.ref = 'toolkit-version' }
 toolkit-livedata = { group = "io.github.matheus-corregiari", name = "livedata", version.ref = 'toolkit-version' }
-toolkit-splinter = { group = "io.github.matheus-corregiari", name = "splinter", version.ref = 'toolkit-version' }
 toolkit-statemachine = { group = "io.github.matheus-corregiari", name = "statemachine", version.ref = 'toolkit-version' }
 
 # Shimmer
@@ -116,12 +115,10 @@ org-jacoco-core = { module = "org.jacoco:org.jacoco.core", version.ref = "orgjac
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber-version" }
 imperiya = { group = "io.github.khomdrake", name = "imperiya", version.ref = "imperiya-version" }
 
-# Big Brother
-bigbrother-core = { group = "io.github.mrocigno", name = "big-brother-core", version.ref = 'bigbrother-version'  }
-bigbrother-network = { group = "io.github.mrocigno", name = "big-brother-network", version.ref = 'bigbrother-version'  }
-bigbrother-log = { group = "io.github.mrocigno", name = "big-brother-log", version.ref = 'bigbrother-version'  }
-
 # Tests
+tests-kotest-junit5 = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest-version" }
+tests-kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest-version" }
+tests-kotest-property = { group = "io.kotest", name = "kotest-property", version.ref = "kotest-version" }
 tests-junit = { group = "junit", name = "junit", version.ref = 'junit-version'  }
 tests-mockk-normal = { group = "io.mockk", name = "mockk", version.ref = 'mockk-version'  }
 tests-mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = 'mockk-version'  }

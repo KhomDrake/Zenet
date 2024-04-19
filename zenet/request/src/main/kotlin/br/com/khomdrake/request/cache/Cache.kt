@@ -54,7 +54,7 @@ class Cache<Data> internal constructor(
         LogHandler.logInfo(mainTag, info)
     }
 
-    suspend fun save(key: String, data: Data) = apply {
+    suspend fun save(data: Data) = apply {
         kotlin.runCatching {
             save?.invoke(key, data)
         }
@@ -88,9 +88,9 @@ class Cache<Data> internal constructor(
             }
     }
 
-    suspend fun retrieve(key: String) = retrieve?.invoke(key)
+    suspend fun retrieve() = retrieve?.invoke(key)
 
-    suspend fun remove(key: String) = apply {
+    suspend fun remove() = apply {
         kotlin.runCatching {
             remove?.invoke(key)
         }.onSuccess {
@@ -116,8 +116,10 @@ class Cache<Data> internal constructor(
     }
 
     suspend fun isExpired(currentTime: Long) : Boolean {
-        val expirationDate = (if(type == CacheType.DISK) DiskVault.getValueLong(key)
-            else MemoryVault.getDataLong(key)) ?: return true
+        val expirationDate = (
+            if(type == CacheType.DISK) DiskVault.getValueLong(key)
+            else MemoryVault.getDataLong(key)
+        ) ?: return true
 
         return currentTime >= expirationDate
     }
